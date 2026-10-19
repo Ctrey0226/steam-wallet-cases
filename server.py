@@ -23,7 +23,7 @@ STATIC_DIR = BASE_DIR / "web" / "static"
 # 定时器与采集状态
 SCHEDULER_CONFIG = {
     "enabled": True,
-    "interval_seconds": 3600, # 默认每小时自动刷新采集一次
+    "interval_seconds": 300, # 5分钟自动全量刷新采集一次
     "last_run": None,
     "next_run": None
 }
@@ -52,7 +52,13 @@ async def run_collector_task():
     COLLECT_STATE["last_error"] = None
     
     try:
-        cmd = [sys.executable, str(BASE_DIR / "steam_cases.py"), "fetch-all", "--batch-size", "5", "--request-interval", "5"]
+        cmd = [
+            sys.executable, str(BASE_DIR / "steam_cases.py"), "fetch",
+            "--force",
+            "--batch-size", "5",
+            "--request-interval", "3",
+            "--batch-interval", "8"
+        ]
         proc = await asyncio.create_subprocess_exec(
             *cmd,
             cwd=str(BASE_DIR),
@@ -117,11 +123,14 @@ async def background_scheduler_worker():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    task = asyncio.create_task(background_scheduler_worker())
+    # 启动定时器协程
+    sched_task = asyncio.create_task(background_scheduler_worker())
+    # 启动时立即在后台执行一次强制刷新
+    asyncio.create_task(run_collector_task())
     yield
-    task.cancel()
+    sched_task.cancel()
     try:
-        await task
+        await sched_task
     except asyncio.CancelledError:
         pass
 

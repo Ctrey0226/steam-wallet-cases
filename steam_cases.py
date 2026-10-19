@@ -361,8 +361,9 @@ class Collector:
             return 0 if self.probe() else 1
         if not self.gate_is_current() and not self.probe():
             return 1
-        pending = [item for item in self.items if not self.has_quote(item)]
-        print(f"目录 {len(self.items)} 种，待采集 {len(pending)} 种。", flush=True)
+        force = getattr(self.args, "force", False)
+        pending = self.items if force else [item for item in self.items if not self.has_quote(item)]
+        print(f"目录 {len(self.items)} 种，待采集 {len(pending)} 种（强制刷新: {force}）。", flush=True)
         self.collect(pending)
         return 0
 
@@ -410,6 +411,7 @@ def parser() -> argparse.ArgumentParser:
             sub.add_argument("--batch-interval", type=nonnegative_float, default=20)
             sub.add_argument("--timeout", type=nonnegative_float, default=25)
             sub.add_argument("--retries", type=int, choices=(0, 1), default=1)
+            sub.add_argument("--force", action="store_true", help="强制重新采集所有商品，覆盖旧报价。")
             sub.add_argument("--transport", choices=("auto", "powershell", "urllib"), default="auto",
                              help="auto 在 Windows 使用系统 PowerShell，其他系统使用 urllib。")
         if name == "calc":
