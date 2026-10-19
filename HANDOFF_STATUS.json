@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-18T17:30:03+00:00",
+  "project_path": "/var/lib/hermes-agent/workspace/projects/steam-wallet-cases",
+  "files_verified": 54,
+  "quote_count": 42,
+  "server_offline_tests": {
+    "count": 9,
+    "exit_code": 0,
+    "report": "handoff/server-unit-tests.txt"
+  },
+  "hermes_gateway": "active",
+  "hermes_model_acceptance": "accepted_via_xem_glm53",
+  "upstream_error": "historical only: User location is not supported for the API use. (old provider; xem added per user instruction)",
+  "qq_report_sent": true,
+  "qq_recipient": "1468682093",
+  "qq_message_id": "ROBOT1.0_sgYj74cGbTpV3LOBRAfkH95uvhtMgd9ISIaNgpJ8ifBCov5fb4isLRKzi9awh7fvR.DcdPqom9djRHxgBAY8Vw!!",
+  "qq_send_receipt": "handoff/qq-send-receipt.json",
+  "notes": "Phase 1 acceptance done 2026-10-19 01:30 CST (54/54 hashes, 42/42 CNY quotes, 9/9 tests, see HANDOFF_ACK.md). Phase 2 done 2026-10-19: QQ completion report SENT via official CLI to qqbot:438A53A3FEAA2CAFAC5EB97435907AD1 (QQ 1468682093), success=true with message_id; receipt at handoff/qq-send-receipt.json. Handoff complete; awaiting user development instructions.",
+  "provider": "xem",
+  "model": "glm-5.3",
+  "model_connectivity_verified": true,
+  "hermes_acceptance_confirmed": true,
+  "qq_completion_report_sent": true,
+  "next_step": "Handoff fully complete. Awaiting user development instructions (web app per HANDOFF.md section 8); no re-collection/development without user instruction."
+}

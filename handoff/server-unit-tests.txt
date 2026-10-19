@@ -1,0 +1,14 @@
+test_batch_limit_and_resume_without_duplicate_quotes (test_steam_cases.CollectorTests.test_batch_limit_and_resume_without_duplicate_quotes) ... ok
+test_client_enforces_request_spacing (test_steam_cases.CollectorTests.test_client_enforces_request_spacing) ... ok
+test_client_rate_limit_and_invalid_json_stop_without_retry (test_steam_cases.CollectorTests.test_client_rate_limit_and_invalid_json_stop_without_retry) ... ok
+test_currency_and_empty_order_books (test_steam_cases.CollectorTests.test_currency_and_empty_order_books) ... ok
+test_failed_probe_blocks_bulk (test_steam_cases.CollectorTests.test_failed_probe_blocks_bulk) ... ok
+test_output_lock_prevents_parallel_collectors (test_steam_cases.CollectorTests.test_output_lock_prevents_parallel_collectors) ... ok
+test_rate_limit_keeps_progress_and_enforces_cooldown (test_steam_cases.CollectorTests.test_rate_limit_keeps_progress_and_enforces_cooldown) ... ok
+test_requested_discount_direction (test_steam_cases.CollectorTests.test_requested_discount_direction) ... ok
+test_retry_after_never_retries_immediately (test_steam_cases.CollectorTests.test_retry_after_never_retries_immediately) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.038s
+
+OK

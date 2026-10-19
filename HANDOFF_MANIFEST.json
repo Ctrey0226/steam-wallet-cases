@@ -1,0 +1,281 @@
+{
+  "project": "Steam CS2 case wallet discount calculator",
+  "prepared_at": "2026-10-18T16:54:21.733943+00:00",
+  "destination": "/var/lib/hermes-agent/workspace/projects/steam-wallet-cases",
+  "catalog_count": 42,
+  "quote_count": 42,
+  "raw_response_count": 42,
+  "test_count": 9,
+  "files": [
+    {
+      "path": ".gitignore",
+      "size": 19,
+      "sha256": "ff5a734fd7026236a1bc86191d9c0f59828897a7cf9da6aba347bd0fbeeb1040"
+    },
+    {
+      "path": "01-probe.cmd",
+      "size": 83,
+      "sha256": "767b38cc083d927368ec12582a0c5eb2924b23b3a5c43cc29745a60f14848212"
+    },
+    {
+      "path": "02-fetch-all.cmd",
+      "size": 67,
+      "sha256": "a1ed9781dc572cca56bee4fb372b9de57e7d16e0b9eff4a8fa61a7048511a60d"
+    },
+    {
+      "path": "catalog.json",
+      "size": 6461,
+      "sha256": "d6b5b0b8bd940b8025ba1596efa41052bc8226387c5c572e3a568bb005e3332e"
+    },
+    {
+      "path": "data/collection_summary.json",
+      "size": 603,
+      "sha256": "a23eed086aceae6a3fc13057f8cb75f37799ee6271712ab3aece2e54f975f924"
+    },
+    {
+      "path": "data/progress.json",
+      "size": 646,
+      "sha256": "42e08394961b22f68bb4f0bab91a076988cd4146eb24caed1a12dfd4d4e9ba63"
+    },
+    {
+      "path": "data/quotes.csv",
+      "size": 4375,
+      "sha256": "3b2a6912fa67bc30c5e1bf879e0b9501e2e7e7d0d4a776311e9a933bc0b7b663"
+    },
+    {
+      "path": "data/quotes.json",
+      "size": 18778,
+      "sha256": "cf577c89641fb2c9b3ba2324b809d885589ef8cf23b842d7d75117691c8bd354"
+    },
+    {
+      "path": "data/raw/1269049.json",
+      "size": 21275,
+      "sha256": "cbc7818ebe1e7b34d4c7441fbcc052c85f1ab9231adef6e46d94bfeb6255e9b6"
+    },
+    {
+      "path": "data/raw/1275323.json",
+      "size": 21599,
+      "sha256": "32fc4718127341c824527989ecdf3a997e9322f5a04857f04ca000d0149f11a5"
+    },
+    {
+      "path": "data/raw/139654771.json",
+      "size": 21355,
+      "sha256": "fb51d48a5d0796c03a28c5f9bb150e2a51f606b2c1269bbb3d28eb7c809a3f8f"
+    },
+    {
+      "path": "data/raw/14962905.json",
+      "size": 21538,
+      "sha256": "eaf8747e5ed2ddad8eb9972aaed738f9ea447e13b957aae7a118ffe91a612f81"
+    },
+    {
+      "path": "data/raw/149865785.json",
+      "size": 21548,
+      "sha256": "fe0c005ef82f829915023a1f6a4db6624227aa26f606b03a46572a08ce84e9b6"
+    },
+    {
+      "path": "data/raw/1546282.json",
+      "size": 21308,
+      "sha256": "04d1d91552a80d43e4b53b9f8ec08e66e7d8c22c50f7ef159706f6d42ffd329f"
+    },
+    {
+      "path": "data/raw/15490345.json",
+      "size": 21342,
+      "sha256": "b49c5f638a74ba97b715b34cfeeb072914a6d63a392bfc5a8858ca3d4427683f"
+    },
+    {
+      "path": "data/raw/15490346.json",
+      "size": 21331,
+      "sha256": "256630c45b125f643700966b43026260b491af315a24a237f06b914d9d72afac"
+    },
+    {
+      "path": "data/raw/156110183.json",
+      "size": 21572,
+      "sha256": "b413b8653c9854c1a952ed51419849b0a6ba286caf57985c847792ef6b5c0cac"
+    },
+    {
+      "path": "data/raw/165027636.json",
+      "size": 21634,
+      "sha256": "fe8da9646bd3f8eb5d4731cc064e62e44ac18919c7c43645287c274b6680363d"
+    },
+    {
+      "path": "data/raw/175854202.json",
+      "size": 21251,
+      "sha256": "fe04988d9cee833881227b67e34c811fbcedaf727fecae59dfdf178212972e35"
+    },
+    {
+      "path": "data/raw/175880240.json",
+      "size": 21464,
+      "sha256": "78234e709f0d255b8f89fd6184f22d6f26c5b9b38bf1aa3e57160304b670d775"
+    },
+    {
+      "path": "data/raw/175896275.json",
+      "size": 21410,
+      "sha256": "8772aab87b9d4a36daa27c698c0e0ee6657101079c4ece7d7c490f04bf4e5f4c"
+    },
+    {
+      "path": "data/raw/175917239.json",
+      "size": 21708,
+      "sha256": "23f3aebdbbc7b1c85ed70eb3cdb54aa77a11077c3115a11f8be42c30f0511602"
+    },
+    {
+      "path": "data/raw/175966708.json",
+      "size": 21542,
+      "sha256": "534139bb307e725b0448498b24060e5b5e9311d67cffa898f354743b9673348f"
+    },
+    {
+      "path": "data/raw/175999886.json",
+      "size": 21719,
+      "sha256": "ce1c74389835150084bc2941b3bd9c71e8d86abaad72eab87b598eaac89cfbe0"
+    },
+    {
+      "path": "data/raw/176024744.json",
+      "size": 21587,
+      "sha256": "e69f6ab1749647626169a9bb3a39451694cc12251c66fcd9e1eb7326a859e7fb"
+    },
+    {
+      "path": "data/raw/176042493.json",
+      "size": 21565,
+      "sha256": "6840a17dd97d5fc9a83ab2fcd6608fdc1d79c4847d7537b772d99d13bfafd5bc"
+    },
+    {
+      "path": "data/raw/176091756.json",
+      "size": 21333,
+      "sha256": "87b89e7c708c80ea03c6da7c0a0d1e991a71a875aac3f898b81e68e635e12f09"
+    },
+    {
+      "path": "data/raw/176096390.json",
+      "size": 21311,
+      "sha256": "6887a94749a11c377f80ce266c50e1cb25e7950613ab967120827566ca78a389"
+    },
+    {
+      "path": "data/raw/176118270.json",
+      "size": 21502,
+      "sha256": "3febd26b6776288e1166c81edee3d725d33254c7866f86b2664b3cdd256bae36"
+    },
+    {
+      "path": "data/raw/176185874.json",
+      "size": 21710,
+      "sha256": "97289e346272eefd9c3e0f9974ffc9bc68188f66bc342d12dce4bc1cf60ea731"
+    },
+    {
+      "path": "data/raw/176209154.json",
+      "size": 21290,
+      "sha256": "572da4b56919f76bb0670d24c6212422d9d38bba0ba9c1b60d4b779aa2fb5258"
+    },
+    {
+      "path": "data/raw/176240926.json",
+      "size": 21617,
+      "sha256": "a37bf01b304ce31fe9319af87fa986df4e7753a7b44958210be9cce12b6a464b"
+    },
+    {
+      "path": "data/raw/176264317.json",
+      "size": 21200,
+      "sha256": "d3dea3721971b0181d443cf3d839ae265411bc142a8a1b3543c7c7f69bea8383"
+    },
+    {
+      "path": "data/raw/176288467.json",
+      "size": 21461,
+      "sha256": "301cf5f9fd54c0fff92b833e4d29437e1f82b63610f22e01e51dccf9a0cf0c2a"
+    },
+    {
+      "path": "data/raw/176321160.json",
+      "size": 21808,
+      "sha256": "909bdb29874f64418b37331e9bcc3c166bfd2b85b9d4b960f79370fe90a17815"
+    },
+    {
+      "path": "data/raw/176358765.json",
+      "size": 22074,
+      "sha256": "8d7541eae0ca3ae4f219c948f6310147e17c5f3d709db4e45e653e9ea37a7aa9"
+    },
+    {
+      "path": "data/raw/176413986.json",
+      "size": 16241,
+      "sha256": "9b9f8846a4f435e391473be87b8c6607639bdafa18b0526cc449cd81b9b2a3dd"
+    },
+    {
+      "path": "data/raw/176460428.json",
+      "size": 21679,
+      "sha256": "785b3dc43569db2d09dc33d9433b64d54d76135c7d09f08b81b97b897241e913"
+    },
+    {
+      "path": "data/raw/176506126.json",
+      "size": 21750,
+      "sha256": "8f11183bd095d667e06e65b6569a02ca468552202d08d3d6101b13a148232be6"
+    },
+    {
+      "path": "data/raw/1913364.json",
+      "size": 21313,
+      "sha256": "da9d3faae48daeed65902e6b2822f7a945946da58755a583fc7fa2a7597bdc0c"
+    },
+    {
+      "path": "data/raw/23853214.json",
+      "size": 21270,
+      "sha256": "a8f0b037a5e05803c64c5bb9bc580f508e5815ab550380a315b0d08bead35554"
+    },
+    {
+      "path": "data/raw/29205213.json",
+      "size": 21509,
+      "sha256": "79485b5e7dcbd42d53f3023c8ab93ca311e20b07c5a0789e904b223bdfc0784f"
+    },
+    {
+      "path": "data/raw/3438414.json",
+      "size": 21142,
+      "sha256": "21dea2ca89f68beee2db1d9492918943b87d9c3ee57768616cf32dd60db4c306"
+    },
+    {
+      "path": "data/raw/40091990.json",
+      "size": 21388,
+      "sha256": "7901ec12beff1a5ee2a6d5e85b2eb6d87f7170bc4ffc41a63d6814dcb0b61375"
+    },
+    {
+      "path": "data/raw/49359031.json",
+      "size": 21543,
+      "sha256": "37f832e5303c0f25c0d54ee4c2da0f4c07a99534b1e8263e7383d6cec37ab5af"
+    },
+    {
+      "path": "data/raw/67060949.json",
+      "size": 21502,
+      "sha256": "1f7752b9c30a4752722acd26780d514fce3997dadc93e78e36bd3f3be2e0d6d0"
+    },
+    {
+      "path": "data/raw/6820494.json",
+      "size": 21213,
+      "sha256": "31822ce33d50dcbfe2fa6253b9a968281a08fdb00bbbaa93b2cfd00d9fa0adbb"
+    },
+    {
+      "path": "data/raw/7177182.json",
+      "size": 21595,
+      "sha256": "0dc082f9228c9a13983420d6eab1b0319781aef88daba79221d9a8a358b884e6"
+    },
+    {
+      "path": "data/raw/84444464.json",
+      "size": 21413,
+      "sha256": "0e7099f31f3fb107cd2178bd8019343f40f0c89893003018cf41c8b5dbb0feb8"
+    },
+    {
+      "path": "data/raw/8987853.json",
+      "size": 21161,
+      "sha256": "f53d3140d42d98f8f90d502882bc627985a0069dfc0d709c83d59ed926cebd85"
+    },
+    {
+      "path": "HANDOFF.md",
+      "size": 15209,
+      "sha256": "809d94d020a4f50497766d54a28b2d236873adf76ec32570b1c412ee776cb03b"
+    },
+    {
+      "path": "README.md",
+      "size": 5894,
+      "sha256": "66f133de87c3f65231dde805fdfcf3664ce3924659a047b4fc93c303739828b5"
+    },
+    {
+      "path": "steam_cases.py",
+      "size": 24325,
+      "sha256": "f10f857df0a17c3f03b8ea417e6195edbd48a423fdbdac36793e5c3629b96bc4"
+    },
+    {
+      "path": "test_steam_cases.py",
+      "size": 6957,
+      "sha256": "ba9cb9a7cd3ddf942267ff5008e6cb5f8f917a5767e2183ae4dc13b8580ff5e0"
+    }
+  ]
+}

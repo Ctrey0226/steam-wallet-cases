@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "status": "verified",
+  "provider": "xem",
+  "model": "glm-5.3",
+  "approvals_mode": "off",
+  "single_query_mode": "approve",
+  "unattended_mode": "approve",
+  "cron_mode": "approve",
+  "protected_instruction_files": false,
+  "terminal_backend": "local",
+  "code_execution_mode": "project",
+  "sudoers_file": "/etc/sudoers.d/hermes-full-access",
+  "sudo_rule": "hermes ALL=(ALL:ALL) NOPASSWD: ALL",
+  "services": [
+    "hermes-gateway-9d7f1708.service",
+    "hermes-dashboard.service"
+  ],
+  "systemd_overrides": {
+    "NoNewPrivileges": false,
+    "RestrictSUIDSGID": false,
+    "LockPersonality": false
+  },
+  "backup": "/var/backups/hermes-full-access-20261018T173811Z",
+  "verification_session_id": "20261019_hermes_full_access_check_v2",
+  "verification_run_id": "run_e2fb4aa788dc44ebbde464d0d624470d",
+  "verified_at_utc": "2026-10-18T17:43:43.936490+00:00",
+  "tool_evidence": [
+    {
+      "message_id": 383,
+      "tool_name": "execute_code",
+      "tool_call_id": "call_3108bf619b1742e2a2d63635",
+      "result": {
+        "status": "success",
+        "output": "UID: 994\nsudo -n id -u stdout: 0\nsudo -n id -u exit code: 0\nNoNewPrivs:\t0\n",
+        "exit_code": 0,
+        "tool_calls_made": 0,
+        "duration_seconds": 0.06,
+        "kernel": {
+          "mode": "session",
+          "reused": false,
+          "execution_count": 1,
+          "state_reset": false
+        },
+        "stdout_truncated": false,
+        "stdout_bytes_captured": 74,
+        "stdout_bytes_total": 74,
+        "stdout_bytes_omitted": 0
+      }
+    },
+    {
+      "message_id": 384,
+      "tool_name": "terminal",
+      "tool_call_id": "call_14ab925899d64c62b3ed2dec",
+      "result": {
+        "output": "uid=994(hermes) gid=986(hermes) groups=986(hermes)\n---\n0\nsudo_exit=0\n---\nNoNewPrivs:\t0",
+        "exit_code": 0,
+        "error": null
+      }
+    }
+  ],
+  "qq_account_authorization_policy_changed": false,
+  "secret_redaction_changed": false,
+  "builtin_destructive_operation_guards_modified": false
+}

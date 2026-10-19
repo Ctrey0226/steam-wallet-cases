@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.lock
+.DS_Store
+
+# 动态生成的数据与数据库运行时
+data/history.db
+data/.collector.lock

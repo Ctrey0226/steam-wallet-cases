@@ -1,0 +1,26 @@
+{
+  "object": "hermes.run",
+  "run_id": "run_e2fb4aa788dc44ebbde464d0d624470d",
+  "status": "completed",
+  "updated_at": 1792345364.2343545,
+  "created_at": 1792345330.901868,
+  "session_id": "20261019_hermes_full_access_check_v2",
+  "model": "hermes-agent",
+  "last_event": "run.completed",
+  "output": "核验完成，两条路径都是实际执行的结果，无任何掩盖：\n\nexecute_code（Python，无副作用）：\n- 当前进程 UID: 994（hermes 用户）\n- sudo -n id -u 输出: 0，退出码 0（NOPASSWD 免密生效）\n- /proc/self/status: NoNewPrivs: 0\n\nterminal（直连 shell）：\n- id: uid=994(hermes) gid=986(hermes)\n- sudo -n id -u: 0，sudo_exit=0\n- grep NoNewPrivs: NoNewPrivs: 0\n\n结论：之前 execute_code 的审批阻塞已不复现，本次直接执行成功；hermes 账号免密 root 可用，NNP 标志确认为 0，与 systemd 两项关闭后的预期一致。按约定本轮只读，未改任何配置、未联网、未发消息。",
+  "usage": {
+    "input_tokens": 31186,
+    "output_tokens": 698,
+    "total_tokens": 31884,
+    "cache_read_tokens": 22208,
+    "cache_write_tokens": 0
+  },
+  "runtime": {
+    "provider": "custom",
+    "model": "glm-5.3",
+    "route_source": "global"
+  },
+  "completed": true,
+  "partial": false,
+  "interrupted": false
+}

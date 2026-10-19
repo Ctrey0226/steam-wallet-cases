@@ -1,0 +1,224 @@
+{
+  "appid": 730,
+  "currency": "CNY",
+  "created_at": "2026-10-18T16:26:26.3254331+00:00",
+  "scope": "Containers classified as Case; excludes capsules, souvenir packages and terminals.",
+  "attribution": "Item ID mapping by EricZhu-42/SteamTradingSite-ID-Mapper, CC BY 4.0; subset renamed and joined with ByMykel/CSGO-API case types.",
+  "mapping_license": "https://creativecommons.org/licenses/by/4.0/",
+  "sources": {
+    "case_types": "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/crates.json",
+    "steam_mapper": "https://raw.githubusercontent.com/EricZhu-42/SteamTradingSite-ID-Mapper/main/steam/730.json"
+  },
+  "items": [
+    {
+      "market_hash_name": "Chroma 2 Case",
+      "cn_name": "幻彩 2 号武器箱",
+      "item_nameid": 40091990
+    },
+    {
+      "market_hash_name": "Chroma 3 Case",
+      "cn_name": "幻彩 3 号武器箱",
+      "item_nameid": 149865785
+    },
+    {
+      "market_hash_name": "Chroma Case",
+      "cn_name": "幻彩武器箱",
+      "item_nameid": 29205213
+    },
+    {
+      "market_hash_name": "Clutch Case",
+      "cn_name": "命悬一线武器箱",
+      "item_nameid": 175966708
+    },
+    {
+      "market_hash_name": "CS:GO Weapon Case",
+      "cn_name": "反恐精英武器箱",
+      "item_nameid": 1275323
+    },
+    {
+      "market_hash_name": "CS:GO Weapon Case 2",
+      "cn_name": "反恐精英 2 号武器箱",
+      "item_nameid": 1913364
+    },
+    {
+      "market_hash_name": "CS:GO Weapon Case 3",
+      "cn_name": "反恐精英 3 号武器箱",
+      "item_nameid": 6820494
+    },
+    {
+      "market_hash_name": "CS20 Case",
+      "cn_name": "反恐精英20周年武器箱",
+      "item_nameid": 176091756
+    },
+    {
+      "market_hash_name": "Danger Zone Case",
+      "cn_name": "“头号特训”武器箱",
+      "item_nameid": 176024744
+    },
+    {
+      "market_hash_name": "Dreams & Nightmares Case",
+      "cn_name": "梦魇武器箱",
+      "item_nameid": 176288467
+    },
+    {
+      "market_hash_name": "eSports 2013 Case",
+      "cn_name": "电竞 2013 武器箱",
+      "item_nameid": 1269049
+    },
+    {
+      "market_hash_name": "eSports 2013 Winter Case",
+      "cn_name": "电竞 2013 冬季武器箱",
+      "item_nameid": 15490345
+    },
+    {
+      "market_hash_name": "eSports 2014 Summer Case",
+      "cn_name": "电竞 2014 夏季武器箱",
+      "item_nameid": 15490346
+    },
+    {
+      "market_hash_name": "Falchion Case",
+      "cn_name": "弯曲猎手武器箱",
+      "item_nameid": 49359031
+    },
+    {
+      "market_hash_name": "Fever Case",
+      "cn_name": "热潮武器箱",
+      "item_nameid": 176506126
+    },
+    {
+      "market_hash_name": "Fracture Case",
+      "cn_name": "裂空武器箱",
+      "item_nameid": 176185874
+    },
+    {
+      "market_hash_name": "Gallery Case",
+      "cn_name": "画廊武器箱",
+      "item_nameid": 176460428
+    },
+    {
+      "market_hash_name": "Gamma 2 Case",
+      "cn_name": "伽玛 2 号武器箱",
+      "item_nameid": 165027636
+    },
+    {
+      "market_hash_name": "Gamma Case",
+      "cn_name": "伽玛武器箱",
+      "item_nameid": 156110183
+    },
+    {
+      "market_hash_name": "Glove Case",
+      "cn_name": "手套武器箱",
+      "item_nameid": 175854202
+    },
+    {
+      "market_hash_name": "Horizon Case",
+      "cn_name": "地平线武器箱",
+      "item_nameid": 175999886
+    },
+    {
+      "market_hash_name": "Huntsman Weapon Case",
+      "cn_name": "猎杀者武器箱",
+      "item_nameid": 8987853
+    },
+    {
+      "market_hash_name": "Kilowatt Case",
+      "cn_name": "千瓦武器箱",
+      "item_nameid": 176413986
+    },
+    {
+      "market_hash_name": "Operation Bravo Case",
+      "cn_name": "“英勇大行动”武器箱",
+      "item_nameid": 1546282
+    },
+    {
+      "market_hash_name": "Operation Breakout Weapon Case",
+      "cn_name": "“突围大行动”武器箱",
+      "item_nameid": 14962905
+    },
+    {
+      "market_hash_name": "Operation Broken Fang Case",
+      "cn_name": "“狂牙大行动”武器箱",
+      "item_nameid": 176209154
+    },
+    {
+      "market_hash_name": "Operation Hydra Case",
+      "cn_name": "“九头蛇大行动”武器箱",
+      "item_nameid": 175896275
+    },
+    {
+      "market_hash_name": "Operation Phoenix Weapon Case",
+      "cn_name": "“凤凰大行动”武器箱",
+      "item_nameid": 7177182
+    },
+    {
+      "market_hash_name": "Operation Riptide Case",
+      "cn_name": "“激流大行动”武器箱",
+      "item_nameid": 176264317
+    },
+    {
+      "market_hash_name": "Operation Vanguard Weapon Case",
+      "cn_name": "“先锋大行动”武器箱",
+      "item_nameid": 23853214
+    },
+    {
+      "market_hash_name": "Operation Wildfire Case",
+      "cn_name": "“野火大行动”武器箱",
+      "item_nameid": 139654771
+    },
+    {
+      "market_hash_name": "Prisma 2 Case",
+      "cn_name": "棱彩2号武器箱",
+      "item_nameid": 176118270
+    },
+    {
+      "market_hash_name": "Prisma Case",
+      "cn_name": "棱彩武器箱",
+      "item_nameid": 176042493
+    },
+    {
+      "market_hash_name": "Recoil Case",
+      "cn_name": "反冲武器箱",
+      "item_nameid": 176321160
+    },
+    {
+      "market_hash_name": "Revolution Case",
+      "cn_name": "变革武器箱",
+      "item_nameid": 176358765
+    },
+    {
+      "market_hash_name": "Revolver Case",
+      "cn_name": "左轮武器箱",
+      "item_nameid": 84444464
+    },
+    {
+      "market_hash_name": "Shadow Case",
+      "cn_name": "暗影武器箱",
+      "item_nameid": 67060949
+    },
+    {
+      "market_hash_name": "Shattered Web Case",
+      "cn_name": "“裂网大行动”武器箱",
+      "item_nameid": 176096390
+    },
+    {
+      "market_hash_name": "Snakebite Case",
+      "cn_name": "蛇噬武器箱",
+      "item_nameid": 176240926
+    },
+    {
+      "market_hash_name": "Spectrum 2 Case",
+      "cn_name": "光谱 2 号武器箱",
+      "item_nameid": 175917239
+    },
+    {
+      "market_hash_name": "Spectrum Case",
+      "cn_name": "光谱武器箱",
+      "item_nameid": 175880240
+    },
+    {
+      "market_hash_name": "Winter Offensive Weapon Case",
+      "cn_name": "冬季攻势武器箱",
+      "item_nameid": 3438414
+    }
+  ]
+}

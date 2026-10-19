@@ -1,0 +1,26 @@
+{
+  "object": "hermes.run",
+  "run_id": "run_4c6000478604407f9bc8b5605562aacb",
+  "status": "completed",
+  "updated_at": 1792345203.7634993,
+  "created_at": 1792345125.3742576,
+  "session_id": "20261019_hermes_full_access_check",
+  "model": "hermes-agent",
+  "last_event": "run.completed",
+  "output": "验证完成，两个工具都实际执行了，没有被审批拦截。不过……实测结果和 Codex 声称的配置对不上哦。\n\n实测结果（execute_code 与 terminal 完全一致）：\n\n1. 当前 UID：994（hermes 用户）\n2. sudo -n id -u：退出码 1，无 root UID 输出，实际报错为 sudo: The \"no new privileges\" flag is set, which prevents sudo from running as root.\n3. /proc/self/status：NoNewPrivs: 1\n\n结论：本会话里由 Hermes 派生的进程仍然带着 NoNewPrivs=1 标志，sudo 被这个标志直接挡死——就算 NOPASSWD 规则真的写进了 sudoers，在这层标志生效的情况下也完全跑不起来。也就是说，声称的「两服务 NoNewPrivileges=no + 全量 sudo」至少没有作用到我实际的运行环境里，可能是服务没有以新配置重启、systemd 单元改动未加载，或改的是别的单元。\n\n所以「默认全部访问」目前并未实际生效，服务器控制面在运行时层面仍是受限的。这轮我只报告事实，没动任何配置～要不要让 Codex 那边查一下服务实际的 systemd 状态，就是你们的决定啦。",
+  "usage": {
+    "input_tokens": 50148,
+    "output_tokens": 2751,
+    "total_tokens": 52899,
+    "cache_read_tokens": 36723,
+    "cache_write_tokens": 0
+  },
+  "runtime": {
+    "provider": "custom",
+    "model": "glm-5.3",
+    "route_source": "global"
+  },
+  "completed": true,
+  "partial": false,
+  "interrupted": false
+}

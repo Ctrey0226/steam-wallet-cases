@@ -1,0 +1,20 @@
+{
+  "reason": "Restore historical working Antigravity egress documented 2026-10-17",
+  "before": {
+    "now": "🇺🇸美国01-0.1倍 | 电信联通移动推荐",
+    "fixed": ""
+  },
+  "after": {
+    "now": "🇺🇸美国圣何塞07 | 三网推荐",
+    "fixed": "🇺🇸美国圣何塞07 | 三网推荐"
+  },
+  "http_status": 204,
+  "rollback": "DELETE /proxies/AI-OUT restores prior automatic selection",
+  "verification": "Model still returned upstream location restriction after historical node restoration.",
+  "rollback_performed": true,
+  "rollback_http_status": 204,
+  "final_selection": {
+    "now": "🇺🇸美国01-0.1倍 | 电信联通移动推荐",
+    "fixed": ""
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "object": "hermes.run",
+  "run_id": "run_b6b055c8f62d46be8f19c90e7b69473b",
+  "status": "failed",
+  "updated_at": 1792342723.351244,
+  "created_at": 1792342689.81324,
+  "session_id": "20261019_steam_wallet_project",
+  "model": "hermes-agent",
+  "error": "HTTP 400: Invalid request",
+  "last_event": "run.failed",
+  "completed": false,
+  "partial": false,
+  "interrupted": false
+}

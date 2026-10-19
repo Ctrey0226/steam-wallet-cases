@@ -1,0 +1,16 @@
+{
+  "catalog_count": 42,
+  "collected_count": 42,
+  "currency": "CNY",
+  "price_unit": "CNY cents in quotes.json; CNY yuan in quotes.csv",
+  "first_observation_shanghai": "2026-10-19T00:34:11+08:00",
+  "last_observation_shanghai": "2026-10-19T00:40:52+08:00",
+  "minimum_observed_response_spacing_seconds": 6.0,
+  "batch_size": 5,
+  "max_batches": 10,
+  "used_batches": 9,
+  "request_interval_seconds": 5,
+  "batch_interval_seconds": 20,
+  "retries": 0,
+  "validation": "All 42 catalog names and IDs present; positive CNY bid/ask; raw responses match JSON; CSV contains 42 data rows."
+}
