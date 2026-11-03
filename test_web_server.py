@@ -47,8 +47,31 @@ class TestSteamCasesWeb(unittest.TestCase):
     def test_index_page(self):
         resp = client.get("/")
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("CS2 武器箱 Steam 折扣看板", resp.text)
+        self.assertIn("CS2 武器箱行情 | 采购折扣看板", resp.text)
+        self.assertIn('aria-labelledby="inventoryTitle"', resp.text)
+        self.assertIn('role="dialog"', resp.text)
         self.assertIn("calcModal", resp.text)
+        self.assertIn('href="./inventory"', resp.text)
+        self.assertIn('href="./account"', resp.text)
+        self.assertIn("tactical.css", resp.text)
+        self.assertEqual(client.get("/static/tactical.css").status_code, 200)
+
+    def test_personal_account_pages_are_served_without_inventory_data(self):
+        for path in ("/account", "/inventory"):
+            resp = client.get(path)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("个人库存管理", resp.text)
+            self.assertIn("通过 Steam 登录并绑定", resp.text)
+            self.assertIn("account.js", resp.text)
+            self.assertIn("no-store", resp.headers.get("cache-control", ""))
+        self.assertEqual(client.get("/static/account.js").status_code, 200)
+        self.assertEqual(client.get("/static/account.css").status_code, 200)
+
+    def test_account_api_is_integrated_and_inventory_requires_login(self):
+        account = client.get('/api/account')
+        self.assertEqual(account.status_code, 200)
+        self.assertFalse(account.json()['authenticated'])
+        self.assertEqual(client.get('/api/inventory').status_code, 401)
 
     def test_all_images_exist(self):
         img_dir = pathlib.Path(__file__).parent / "web" / "static" / "images"

@@ -1,0 +1,36 @@
+/* Account configuration and inventory inspection, sharing the tactical theme. */
+[hidden] { display: none !important; }
+.account-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+.account-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 13px; text-decoration: none; border: 1px solid transparent; color: var(--text-muted); border-radius: 2px; }
+.account-nav a:hover, .account-nav a[aria-current="page"] { background: #252c29; border-color: var(--border-color); color: var(--text-main); }
+.binding-panel { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 26px; border: 1px solid var(--border-color); background: var(--bg-card); border-radius: var(--radius); }
+.section-kicker { display: block; color: var(--accent-green); font: 11px var(--font-data); letter-spacing: 1.8px; margin-bottom: 11px; }
+.binding-panel h2 { font-size: 24px; }
+.binding-panel p { margin: 10px 0 0; color: var(--text-muted); }
+.binding-actions { display: flex; flex-direction: column; align-items: stretch; gap: 10px; flex-shrink: 0; }
+.binding-actions .btn { text-decoration: none; }
+.account-identity { overflow-wrap: anywhere; font: 12px/1.8 var(--font-data); }
+.account-guidance { max-width: 100ch; color: var(--text-dim); font-size: 12px; line-height: 1.8; margin: 18px 0 26px; }
+.account-guidance p { margin: 0 0 8px; }
+.account-message { padding: 16px 18px; border: 1px solid var(--border-color); color: var(--text-muted); margin: 16px 0; border-radius: 2px; overflow-wrap: anywhere; }
+.account-message[data-state="error"] { color: #f6b1a7; border-color: #78504a; background: #261d1c; }
+.account-message[data-state="success"] { color: var(--tag-good); border-color: #455d3e; }
+.inventory-meta { color: var(--text-dim); font-size: 12px; margin: 7px 0 0; }
+.inventory-filters { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.inventory-filters .search-field { flex: 1; max-width: 420px; }
+.inventory-filters .search-input { width: 100%; padding-left: 13px; }
+.personal-grid { align-items: stretch; }
+.inventory-item { min-width: 0; border: 1px solid var(--border-color); background: var(--bg-card); border-radius: var(--radius); overflow: hidden; }
+.inventory-art { background: #171c1d; height: 145px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); }
+.inventory-art img { max-width: 160px; width: 80%; height: 130px; object-fit: contain; }
+.inventory-art span { color: var(--text-dim); font-size: 12px; }
+.inventory-item-content { padding: 17px; }
+.inventory-item h3 { margin: 0; font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.inventory-market-name { color: var(--text-dim); margin: 5px 0 13px; font-size: 11px; overflow-wrap: anywhere; }
+.inventory-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.inventory-badges span { font-size: 11px; padding: 3px 7px; background: #252c29; color: var(--text-muted); border: 1px solid var(--border-color); }
+.inventory-badges span.available { color: var(--tag-good); border-color: #455d3e; }
+.inventory-badges span.restricted { color: var(--tag-warn); border-color: #655438; }
+.inventory-item-details { color: var(--text-dim); font: 11px/1.6 var(--font-data); margin: 14px 0 0; padding-top: 10px; border-top: 1px solid var(--border-color); overflow-wrap: anywhere; }
+@media (max-width: 850px) { .app-header .header-content { align-items: flex-start; flex-direction: column; gap: 12px; } .binding-panel { align-items: flex-start; flex-direction: column; } .binding-actions { width: 100%; flex-direction: row; flex-wrap: wrap; } }
+@media (max-width: 560px) { .binding-panel { padding: 20px 16px; } .binding-panel h2 { font-size: 21px; } .binding-actions { flex-direction: column; } .account-nav { gap: 2px; width: 100%; } .account-nav a { padding: 9px 11px; } .inventory-filters { flex-direction: column; align-items: stretch; } .inventory-filters .search-field { max-width: none; } .account-guidance { margin-bottom: 20px; } #loadInventory { align-self: flex-start; } }

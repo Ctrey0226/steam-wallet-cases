@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="same-origin">
+  <title>我的库存与账户 | CS2 武器箱行情</title>
+  <link rel="stylesheet" href="./static/tactical.css?v=20261103-1">
+  <link rel="stylesheet" href="./static/account.css?v=1">
+  <script src="./static/account.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#accountMain">跳转到我的库存</a>
+  <header class="app-header"><div class="header-content"><div class="logo-box"><div class="logo-mark" aria-hidden="true"><span>CS2</span></div><div class="logo-text"><h1>个人库存管理</h1><p>绑定本人 Steam · 只读同步 · 不托管交易权限</p></div></div><nav class="account-nav" aria-label="主导航"><a href="./" id="marketLink">行情看板</a><a href="./inventory" id="inventoryLink">我的库存</a><a href="./account" id="accountLink">账户管理</a></nav></div></header>
+  <main class="workspace account-workspace" id="accountMain">
+    <section class="binding-panel" aria-labelledby="bindingTitle">
+      <div><span class="section-kicker">STEAM ACCOUNT</span><h2 id="bindingTitle">先绑定，再查看自己的库存。</h2><p id="accountStatus" role="status" aria-live="polite">正在检查账户状态…</p><p class="account-identity" id="accountIdentity" hidden></p></div>
+      <div class="binding-actions"><a class="btn" id="steamLogin" href="./auth/steam" hidden>通过 Steam 登录并绑定</a><button class="btn btn-secondary" id="logoutButton" hidden>退出本站账户</button><button class="btn btn-secondary" id="retryAccount" hidden>重试账户连接</button></div>
+    </section>
+    <div id="authFeedback" class="account-message" role="status" hidden></div>
+    <section class="account-guidance" id="bindingGuidance" aria-label="绑定说明"><p>首次使用 Steam 官方登录，会创建本站账户并绑定对应 Steam 身份。再次登录同一 Steam 即可回到自己的账户，无需额外设置本站密码。</p><p>本站不接收你的 Steam 密码、Cookie 或手机令牌。Steam 登录只验证身份，不会授予本站交易权限，也不能读取受限的私密库存。请将需要同步的库存设为公开。</p></section>
+    <section id="personalInventory" aria-labelledby="personalInventoryTitle" hidden>
+      <div class="inventory-toolbar"><div><h2 id="personalInventoryTitle">我的 CS2 库存</h2><p class="inventory-meta" id="inventoryMeta">尚未读取库存</p></div><button class="btn btn-secondary" id="loadInventory">读取我的库存</button></div>
+      <div class="inventory-filters"><label class="search-field"><span class="sr-only">搜索我的库存</span><input type="search" id="inventorySearch" class="search-input" placeholder="搜索名称或市场名称…"></label><label><span class="sr-only">物品状态</span><select id="inventoryFilter" class="select-input"><option value="all">全部物品</option><option value="tradable">可交易</option><option value="marketable">可上架市场</option><option value="restricted">交易受限</option></select></label><span class="result-count" id="inventoryCount" aria-live="polite"></span></div>
+      <div class="account-message" id="inventoryMessage" role="status" aria-live="polite">点击读取库存，从 Steam 获取当前可见物品。</div>
+      <div class="grid-container personal-grid" id="inventoryGrid" aria-busy="false"></div>
+      <p class="account-guidance">状态以本次 Steam 响应为准，“可上架”不代表账号一定满足市场使用条件。冷却期、保护期与实际操作结果请以 Steam 页面为准。本版只读，不会自动挂单、购买或发送交易报价。</p>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><p>库存仅在绑定账号通过身份验证后提供给该账户。本站展示 Steam 可见库存快照，不承诺包含储存单元内容或其他未公开物品；空库存、隐私限制和网络失败会分别提示。</p><div class="footer-meta"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2026036807号-1</a><a href="https://beian.mps.gov.cn/#/query/webSearch?code=51160202511983" target="_blank" rel="noopener noreferrer">川公网安备51160202511983号</a><span>CtrlVersion · Steam 库存管理</span></div></div></footer>
+</body>
+</html>

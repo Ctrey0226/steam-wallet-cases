@@ -3,907 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CS2 武器箱 Steam 折扣看板 & 充值计算器</title>
+  <title>CS2 武器箱行情 | 采购折扣看板</title>
   <script src="./static/js/chart.umd.min.js"></script>
-  <style>
-    :root {
-      --bg-primary: #121418;
-      --bg-card: #1c2026;
-      --bg-card-hover: #242a32;
-      --bg-input: #29303a;
-      --border-color: #2e3642;
-      --accent-green: #89be60;
-      --accent-green-hover: #98ce6e;
-      --accent-glow: rgba(137, 190, 96, 0.25);
-      --accent-blue: #60a5fa;
-      --text-main: #f0f3f6;
-      --text-muted: #95a2b3;
-      --text-dim: #64748b;
-      --tag-good: #4ade80;
-      --tag-warn: #facc15;
-      --tag-bad: #f87171;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-primary);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      background: rgba(28, 32, 38, 0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      padding: 1rem 1.5rem;
-    }
-
-    .header-content {
-      max-width: 1360px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .logo-box {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .logo-cat {
-      width: 36px;
-      height: 36px;
-      background: var(--accent-green);
-      color: #121418;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      font-weight: bold;
-      box-shadow: 0 0 16px var(--accent-glow);
-    }
-
-    .logo-text h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .logo-text p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .tool-chip {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      padding: 0.35rem 0.65rem;
-      border-radius: 8px;
-    }
-
-    .search-input {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      width: 180px;
-      outline: none;
-      transition: all 0.2s;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent-green);
-      box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    .select-input {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 0.5rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .btn {
-      background: var(--accent-green);
-      color: #121418;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s;
-    }
-
-    .btn:hover {
-      background: var(--accent-green-hover);
-      box-shadow: 0 0 12px var(--accent-glow);
-      transform: translateY(-1px);
-    }
-
-    .quick-btn {
-      background: #1e2530;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      font-size: 0.72rem;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .quick-btn:hover {
-      color: #60a5fa;
-      border-color: #60a5fa;
-      background: rgba(96, 165, 250, 0.12);
-    }
-
-    .stats-bar {
-      max-width: 1360px;
-      margin: 1rem auto 0;
-      padding: 0 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      color: var(--text-dim);
-    }
-
-    .monitor-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      color: var(--tag-good);
-      background: rgba(74, 222, 128, 0.1);
-      border: 1px solid rgba(74, 222, 128, 0.25);
-      padding: 0.2rem 0.6rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-    }
-
-    main {
-      max-width: 1360px;
-      margin: 1rem auto 2rem;
-      padding: 0 1.5rem;
-      flex: 1;
-      width: 100%;
-    }
-
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .case-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 1.15rem;
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .case-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(137, 190, 96, 0.4);
-      background: var(--bg-card-hover);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px var(--accent-glow);
-    }
-
-    .case-card::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .case-card:hover::after {
-      opacity: 1;
-    }
-
-    .img-wrapper {
-      width: 100%;
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 0.75rem;
-      background: radial-gradient(circle, rgba(137, 190, 96, 0.08) 0%, transparent 70%);
-    }
-
-    .img-wrapper img {
-      max-width: 130px;
-      max-height: 130px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
-      transition: transform 0.3s;
-    }
-
-    .case-card:hover .img-wrapper img {
-      transform: scale(1.06);
-    }
-
-    .case-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.2rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .case-subtitle {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      margin-bottom: 0.8rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* 需购买数量高亮面板 */
-    .count-highlight-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(28, 32, 38, 0.9) 100%);
-      border: 1px solid rgba(59, 130, 246, 0.35);
-      border-radius: 8px;
-      padding: 0.45rem 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .count-highlight-label {
-      font-size: 0.75rem;
-      color: #93c5fd;
-      font-weight: 600;
-    }
-
-    .count-highlight-val {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #60a5fa;
-      display: flex;
-      align-items: baseline;
-      gap: 0.2rem;
-    }
-
-    .count-highlight-val small {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #93c5fd;
-    }
-
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      background: var(--bg-input);
-      border-radius: 8px;
-      padding: 0.45rem 0.75rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .price-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .price-val {
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .depth-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      padding: 0 0.25rem;
-    }
-
-    /* 弹窗 Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 1rem;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 640px;
-      max-height: 92vh;
-      overflow-y: auto;
-      padding: 1.75rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-      position: relative;
-      animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes modalIn {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      background: var(--bg-input);
-      border: none;
-      color: var(--text-muted);
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 5;
-    }
-
-    .close-btn:hover {
-      color: #fff;
-      background: #3c4654;
-    }
-
-    .modal-header {
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      margin-bottom: 1.25rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .modal-img-box {
-      width: 90px;
-      height: 90px;
-      background: radial-gradient(circle, rgba(137, 190, 96, 0.15) 0%, transparent 75%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-img-box img {
-      max-width: 80px;
-      max-height: 80px;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
-    }
-
-    .modal-title-box h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.2rem;
-    }
-
-    .modal-title-box p {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-    }
-
-    .calc-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .data-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.55rem 0.9rem;
-      background: var(--bg-input);
-      border-radius: 10px;
-    }
-
-    .data-row span {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .data-row strong {
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .input-group label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .num-input-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .num-input-wrap span.unit {
-      position: absolute;
-      left: 1rem;
-      color: var(--text-dim);
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .platform-input {
-      width: 100%;
-      background: #171b21;
-      border: 2px solid var(--accent-green);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1.3rem;
-      font-weight: 700;
-      padding: 0.75rem 1rem 0.75rem 2.4rem;
-      outline: none;
-      box-shadow: 0 0 12px var(--accent-glow);
-    }
-
-    .result-card {
-      background: linear-gradient(135deg, rgba(137, 190, 96, 0.12) 0%, rgba(28, 32, 38, 0.8) 100%);
-      border: 1px solid var(--accent-green);
-      border-radius: 12px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .result-main-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .discount-badge {
-      font-size: 1.85rem;
-      font-weight: 800;
-      color: var(--tag-good);
-      display: flex;
-      align-items: baseline;
-      gap: 0.25rem;
-    }
-
-    .discount-badge small {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .sub-result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      padding-top: 0.5rem;
-      border-top: 1px dashed rgba(137, 190, 96, 0.3);
-    }
-
-    .sub-result-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sub-result-item span {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .sub-result-item strong {
-      font-size: 1.05rem;
-      color: var(--text-main);
-    }
-
-    /* 走势图区域 */
-    .chart-section {
-      margin-top: 0.5rem;
-      background: #15191f;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .chart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chart-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .chart-tabs {
-      display: flex;
-      gap: 0.3rem;
-      background: #0d1013;
-      padding: 0.2rem;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    .chart-tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .chart-tab-btn.active {
-      background: var(--accent-green);
-      color: #121418;
-      font-weight: 700;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 200px;
-      width: 100%;
-    }
-
-    .history-drawer {
-      border-top: 1px solid var(--border-color);
-      padding-top: 0.8rem;
-    }
-
-    .history-drawer summary {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .history-table {
-      width: 100%;
-      margin-top: 0.5rem;
-      font-size: 0.75rem;
-      border-collapse: collapse;
-    }
-
-    .history-table th, .history-table td {
-      padding: 0.3rem 0.5rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .history-table th {
-      color: var(--text-dim);
-    }
-
-    .loading-spinner {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(0,0,0,0.3);
-      border-radius: 50%;
-      border-top-color: #121418;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      border-top: 1px solid var(--border-color);
-    }
-  </style>
+  <link rel="stylesheet" href="./static/tactical.css?v=20261103-1">
 </head>
 <body>
-
-  <header>
-    <div class="header-content">
-      <div class="logo-box">
-        <div class="logo-cat">箱</div>
-        <div class="logo-text">
-          <h1>CS2 武器箱 Steam 折扣看板</h1>
-          <p>实时盘口 · 目标数量倒算 · 价格走势监控</p>
+    <a class="skip-link" href="#inventory">跳转到武器箱行情</a>
+    <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></symbol>
+        <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 6M4 12l2 6a7 7 0 0 0 12-1"/></symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+        <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    </defs></svg>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-box">
+                <div class="logo-mark" aria-hidden="true"><span>CS2</span></div>
+                <div class="logo-text"><h1>武器箱行情监控</h1><p>Steam 人民币盘口 · 采购预算与折扣测算</p></div>
+            </div>
+            <nav class="header-account-nav" aria-label="主导航"><a href="./inventory">我的库存</a><a href="./account">账户管理</a></nav>
         </div>
-      </div>
-      <div class="toolbar">
-        <!-- 目标金额输入项 -->
-        <div class="tool-chip" style="border-color: rgba(96, 165, 250, 0.4);">
-          <span style="font-size: 0.8rem; color: #60a5fa; font-weight: 700;">🎯 目标到账</span>
-          <div style="position: relative; display: flex; align-items: center;">
-            <span style="position: absolute; left: 0.4rem; color: #60a5fa; font-size: 0.85rem; font-weight: 700;">¥</span>
-            <input type="number" id="globalTargetBalance" value="298" step="10" min="1" 
-                   style="width: 75px; background: #171b21; border: 1px solid rgba(96, 165, 250, 0.3); color: #fff; font-weight: 700; border-radius: 6px; padding: 0.25rem 0.4rem 0.25rem 1.2rem; text-align: left; outline: none;"
-                   oninput="updateTargetBalance(this.value)">
-          </div>
-          <div style="display: flex; gap: 0.25rem;">
-            <button type="button" class="quick-btn" onclick="updateTargetBalance(100)">100</button>
-            <button type="button" class="quick-btn" onclick="updateTargetBalance(298)">298</button>
-            <button type="button" class="quick-btn" onclick="updateTargetBalance(500)">500</button>
-          </div>
+    </header>
+
+    <main class="workspace" id="main">
+        <section class="control-panel" aria-label="全局测算参数">
+            <div class="control-block">
+                <label class="control-label" for="globalTargetBalance">目标 Steam 余额</label>
+                <div class="control-field">
+                    <div class="amount-field"><span class="currency" aria-hidden="true">¥</span><input type="number" id="globalTargetBalance" value="298" min="1" step="10" inputmode="decimal" oninput="updateTargetBalance(this.value)" aria-describedby="targetHelp"></div>
+                    <div class="quick-options" aria-label="快捷设置目标金额">
+                        <button class="quick-btn" onclick="updateTargetBalance(100)" aria-label="目标 100 元">100</button>
+                        <button class="quick-btn" onclick="updateTargetBalance(298)" aria-label="目标 298 元">298</button>
+                        <button class="quick-btn" onclick="updateTargetBalance(500)" aria-label="目标 500 元">500</button>
+                    </div>
+                </div>
+                <span id="targetHelp" class="sr-only">用目标余额和售出净收入估算所需武器箱数量，单位人民币。</span>
+            </div>
+            <div class="control-block">
+                <label class="control-label" for="globalTargetRatio">期望折扣系数</label>
+                <div class="ratio-field"><input type="number" id="globalTargetRatio" value="0.78" step="0.01" min="0.01" max="1" inputmode="decimal" oninput="updateTargetRatio(this.value)" aria-describedby="ratioHelp"><span id="ratioHelp" class="field-help">用于计算国内采购上限</span></div>
+            </div>
+            <div class="control-block control-action">
+                <button class="btn" onclick="triggerRefresh()" id="refreshBtn"><span id="refreshIcon" class="refresh-icon"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></span><span id="refreshText">刷新 Steam 价格</span></button>
+                <span class="field-help">不会自动下单或交易</span>
+            </div>
+        </section>
+        <div class="market-status" role="status" aria-live="polite">
+            <span id="statsBar"><span id="totalCasesLabel">正在读取行情快照…</span><span id="lastUpdateLabel"></span></span>
+            <span class="monitor-badge" id="monitorStatus" data-state="unknown"><span class="status-dot" aria-hidden="true"></span><span id="monitorText">监控状态读取中</span></span>
         </div>
 
-        <!-- 目标折扣输入项 -->
-        <div class="tool-chip" style="border-color: rgba(250, 204, 21, 0.3);">
-          <span style="font-size: 0.8rem; color: #facc15; font-weight: 600;">折扣</span>
-          <input type="number" id="globalTargetRatio" value="0.78" step="0.01" min="0.5" max="0.99" 
-                 style="width: 54px; background: #171b21; border: 1px solid rgba(250, 204, 21, 0.3); color: #facc15; font-weight: 700; border-radius: 6px; padding: 0.25rem 0.3rem; text-align: center; outline: none;"
-                 oninput="updateTargetRatio(this.value)">
-        </div>
+        <section id="inventory" aria-labelledby="inventoryTitle">
+            <div class="inventory-toolbar">
+                <div class="inventory-heading"><h2 id="inventoryTitle">武器箱行情</h2><span class="result-count" id="resultCount" aria-live="polite"></span></div>
+                <div class="filters">
+                    <label class="search-field"><span class="sr-only">搜索武器箱名称</span><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input type="search" class="search-input" id="searchInput" placeholder="搜索武器箱…" oninput="renderCases()"></label>
+                    <label><span class="sr-only">行情排序方式</span><select class="select-input" id="sortSelect" onchange="renderCases()"><option value="count-asc">所需箱数：从少到多</option><option value="price-desc">最低售价：从高到低</option><option value="buy-desc">最高求购：从高到低</option><option value="price-asc">最低售价：从低到高</option><option value="sell-count-desc">在售挂单：从多到少</option></select></label>
+                </div>
+            </div>
+            <div class="grid-container" id="casesGrid" aria-busy="true"><div class="loading-state">正在载入武器箱与 Steam 盘口…</div></div>
+        </section>
+    </main>
 
-        <input type="text" id="searchInput" class="search-input" placeholder="搜索武器箱..." oninput="filterCases()">
-        <select id="sortSelect" class="select-input" onchange="sortCases()">
-          <option value="count-asc">需购数量 (从少到多)</option>
-          <option value="price-asc">在售标价 (从低到高)</option>
-          <option value="price-desc">在售标价 (从高到低)</option>
-          <option value="buy-desc">求购标价 (从高到低)</option>
-          <option value="sell-count-desc">在售数量 (从多到少)</option>
-        </select>
-        <button id="refreshBtn" class="btn" onclick="triggerRefresh()">
-          <span id="refreshIcon">🔄</span> 刷新行情
-        </button>
-      </div>
+    <div class="modal-overlay" onclick="closeModalOnOverlay(event)" id="calcModal" role="dialog" aria-modal="true" aria-labelledby="modalCnName" aria-describedby="modalEnName" tabindex="-1">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()" aria-label="关闭计算器"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+            <div class="modal-header">
+                <div class="modal-img-box"><img id="modalImg" src="" alt=""></div>
+                <div class="modal-title-box"><h2 id="modalCnName">武器箱名称</h2><p id="modalEnName">Steam Market</p></div>
+            </div>
+            <div class="calc-section">
+                <div class="count-highlight-row modal-target"><span class="count-highlight-label">目标余额 ¥<span id="modalTargetText">298</span> 所需</span><span class="count-highlight-val"><span id="modalCalcBoxCount">-</span><small>个</small><span id="modalCalcTotalNet" class="modal-estimate"></span></span></div>
+                <div class="data-row"><span>Steam 最低售价</span><strong id="modalSteamPrice">-</strong></div>
+                <div class="data-row"><span>Steam 最高求购价</span><strong id="modalBuyPrice">-</strong></div><div class="data-row"><span>单箱售出净收入（估算）</span><strong id="modalNetIncome">-</strong></div>
+                <div class="data-row"><label for="coeffInput">手续费净收入系数</label><input type="number" id="coeffInput" class="coeff-input" value="0.86" step="0.01" min="0.01" max="1" inputmode="decimal" oninput="recalc()"></div>
+                <button class="data-row suggested-price" id="suggestedPriceBtn" onclick="fillSuggestedPrice()"><span>采购上限（<span id="modalTargetLabel">7.8</span> 折）<small>点击填入国内平台买入价</small></span><strong id="modalSuggestedPrice">-</strong></button>
+                <div class="input-group"><label for="platformBuyPrice">国内平台实际买入单价</label><div class="num-input-wrap"><span class="unit" aria-hidden="true">¥</span><input type="number" class="platform-input" id="platformBuyPrice" placeholder="输入实际报价，查看折扣与总成本" min="0.01" step="0.01" inputmode="decimal" oninput="recalc()"></div></div>
+                <div class="result-card" id="calcResultCard" role="status" aria-live="polite">
+                    <div class="result-main-row"><div><span class="result-label">实际充值折扣</span><div class="discount-badge" id="resDiscountBadge"><span id="resDiscountText">--</span><small>折</small></div></div><div><span class="result-label">预计总成本（<span id="resPlanCountLabel">0</span> 个）</span><div class="cost-result" id="planTotalCost">-</div></div></div>
+                    <div class="sub-result-grid"><div class="sub-result-item"><span>每 ¥100 余额的成本</span><strong id="resCost100">-</strong></div><div class="sub-result-item"><span>相比原价节省</span><strong id="planSavedMoney">-</strong></div></div>
+                </div>
+                <div class="chart-section"><div class="chart-header"><span class="chart-title">Steam 盘口走势<small id="chartCompressNote">小时精度采样 · 非成交价</small></span><div class="chart-tabs" aria-label="历史走势采样精度"><button class="chart-tab-btn active" onclick="switchChartView('hour')" id="tabHour" aria-pressed="true">小时</button><button class="chart-tab-btn" onclick="switchChartView('day')" id="tabDay" aria-pressed="false">天</button><button class="chart-tab-btn" onclick="switchChartView('month')" id="tabMonth" aria-pressed="false">月</button></div></div><div class="chart-container"><canvas id="priceHistoryChart" aria-label="Steam 最低售价与最高求购历史走势图" role="img"></canvas></div></div>
+                <details class="history-drawer"><summary>查看最近采集记录</summary><div class="history-scroll"><table class="history-table"><thead><tr><th scope="col">时间</th><th scope="col">最低售价</th><th scope="col">最高求购</th><th scope="col">在售挂单数</th><th scope="col">求购挂单数</th></tr></thead><tbody id="historyTableBody"><tr><td colspan="5">暂无历史数据</td></tr></tbody></table></div></details>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <div class="stats-bar">
-    <div style="display:flex; align-items:center; gap:0.75rem;">
-      <span id="totalCasesLabel">共收录 42 款武器箱</span>
-      <span class="monitor-badge">
-        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:currentColor;"></span>
-        定时自动监控中 (每5分钟)
-      </span>
-    </div>
-    <span id="lastUpdateLabel">更新于: 加载中...</span>
-  </div>
+    <footer class="site-footer"><div class="footer-inner"><p>本工具仅展示公开市场快照并提供测算，不提供充值、交易撮合或收益承诺。Steam 盘口不是即时成交价；采购价需自行填写，结果可能受手续费、价格波动、冷却期及平台规则影响。</p><p>“售出净收入”按设定系数估算，实际以 Steam 结算为准。图片与游戏名称归各权利人所有，本工具与 Valve / Steam 无隶属或合作关系。</p><div class="footer-meta"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2026036807号-1</a><a href="https://beian.mps.gov.cn/#/query/webSearch?code=51160202511983" target="_blank" rel="noopener noreferrer"><img src="./static/images/beian.png" alt="" width="14" height="14">川公网安备51160202511983号</a><span>CtrlVersion · Steam 折扣看板</span><span>仅供个人研究与参考，请自行评估风险</span></div></div></footer>
 
-  <main>
-    <div id="casesGrid" class="grid-container">
-      <!-- 动态卡片 -->
-    </div>
-  </main>
-
-  <!-- 弹窗 -->
-  <div id="calcModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">×</button>
-      <div class="modal-header">
-        <div class="modal-img-box">
-          <img id="modalImg" src="" alt="武器箱图标">
-        </div>
-        <div class="modal-title-box">
-          <h2 id="modalCnName">武器箱名称</h2>
-          <p id="modalEnName">Market Hash Name</p>
-        </div>
-      </div>
-
-      <div class="calc-section">
-        <!-- 弹窗需购买数量横幅 -->
-        <div class="count-highlight-row" style="padding: 0.75rem 1rem;">
-          <span class="count-highlight-label" style="font-size: 0.85rem;">🎯 达成当前目标金额需购买:</span>
-          <div class="count-highlight-val" style="font-size: 1.35rem;">
-            <span id="modalCalcBoxCount">1</span>
-            <small>个</small>
-            <span style="font-size:0.75rem; color:#93c5fd; font-weight:normal; margin-left:0.5rem;" id="modalCalcTotalNet">(预计到手 ¥0.00)</span>
-          </div>
-        </div>
-
-        <div class="data-row">
-          <span>Steam 最低在售价 (现货)</span>
-          <strong id="modalSteamPrice" style="color: var(--accent-green);">¥0.00</strong>
-        </div>
-
-        <div class="data-row" style="background: rgba(250, 204, 21, 0.08); border: 1px solid rgba(250, 204, 21, 0.3); cursor: pointer;" onclick="fillSuggestedPrice()" title="点击直接填入下方买入价输入框">
-          <span style="color: #facc15; display: flex; align-items: center; gap: 0.3rem;">
-            <span>🎯 建议采购上限 (<span id="modalTargetLabel">0.78</span>折)</span>
-            <small style="font-size: 0.7rem; opacity: 0.8;">[点此填入]</small>
-          </span>
-          <strong id="modalSuggestedPrice" style="color: #facc15;">¥0.00</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Steam 最高求购价 (求购)</span>
-          <strong id="modalBuyPrice" style="color: #60a5fa;">¥0.00</strong>
-        </div>
-
-        <div class="data-row">
-          <span>到手到账系数 (默认0.86)</span>
-          <div style="display:flex; align-items:center; gap:0.4rem;">
-            <input type="number" id="coeffInput" value="0.86" step="0.01" min="0.5" max="1.0" 
-                   style="width:75px; background:#171b21; border:1px solid var(--border-color); color:#fff; border-radius:6px; padding:0.25rem 0.5rem; text-align:right;"
-                   oninput="recalc()">
-          </div>
-        </div>
-
-        <div class="data-row" style="background:#202832; border: 1px dashed var(--accent-green);">
-          <span>扣除手续费预计单件到手</span>
-          <strong id="modalNetIncome" style="color: var(--accent-green);">¥0.00</strong>
-        </div>
-
-        <div class="input-group">
-          <label for="platformBuyPrice">国内平台实际买入单价 (手填)</label>
-          <div class="num-input-wrap">
-            <span class="unit">¥</span>
-            <input type="number" id="platformBuyPrice" class="platform-input" placeholder="输入平台价格，如 5.50" step="0.01" min="0.01" oninput="recalc()">
-          </div>
-        </div>
-
-        <!-- 结果展示面板 -->
-        <div class="result-card">
-          <div class="result-main-row">
-            <div>
-              <div style="font-size:0.75rem; color:var(--text-muted);">折算充值折扣</div>
-              <div id="resDiscountBadge" class="discount-badge">
-                <span id="resDiscountText">--</span>
-                <small>折</small>
-              </div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size:0.75rem; color:var(--text-muted);">每充 ¥100 成本</div>
-              <div id="resCost100" style="font-size: 1.35rem; font-weight: 700; color: #fff;">--</div>
-            </div>
-          </div>
-
-          <div class="sub-result-grid">
-            <div class="sub-result-item">
-              <span>国内平台总成本 (<span id="resPlanCountLabel">0</span>个)</span>
-              <strong id="planTotalCost" style="color: #facc15;">--</strong>
-            </div>
-            <div class="sub-result-item">
-              <span>相较官方直充节省现金</span>
-              <strong id="planSavedMoney" style="color: #4ade80;">--</strong>
-            </div>
-          </div>
-        </div>
-
-        <!-- 价格/时间曲线走势图 -->
-        <div class="chart-section">
-          <div class="chart-header">
-            <div class="chart-title">
-              <span>📈 价格时间走势曲线</span>
-              <small style="font-size:0.72rem; color:var(--text-dim); font-weight:normal;" id="chartCompressNote">(曲线平滑压缩)</small>
-            </div>
-            <div class="chart-tabs">
-              <button type="button" class="chart-tab-btn active" id="tabHour" onclick="switchChartView('hour')">小时</button>
-              <button type="button" class="chart-tab-btn" id="tabDay" onclick="switchChartView('day')">天</button>
-              <button type="button" class="chart-tab-btn" id="tabMonth" onclick="switchChartView('month')">月</button>
-            </div>
-          </div>
-          <div class="chart-container">
-            <canvas id="priceHistoryChart"></canvas>
-          </div>
-        </div>
-
-        <!-- 历史记录明细抽屉 -->
-        <details class="history-drawer">
-          <summary>查看详细盘口记录明细表格</summary>
-          <div style="max-height: 140px; overflow-y: auto; margin-top: 0.5rem;">
-            <table class="history-table">
-              <thead>
-                <tr>
-                  <th>观测时间</th>
-                  <th>最低在售</th>
-                  <th>最高求购</th>
-                  <th>在售量</th>
-                  <th>求购量</th>
-                </tr>
-              </thead>
-              <tbody id="historyTableBody"></tbody>
-            </table>
-          </div>
-        </details>
-      </div>
-    </div>
-  </div>
-
-  <footer style="background: rgba(20, 24, 30, 0.95); border-top: 1px solid var(--border-color); padding: 2rem 1.5rem; margin-top: auto; font-size: 0.78rem; color: var(--text-dim); text-align: center; line-height: 1.8;">
-    <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem;">
-      <p style="color: var(--text-muted); font-size: 0.82rem;">
-        <strong>免责声明</strong>：本站为个人自托管的开源辅助计算工具，非 Valve Corporation 或 Steam 官方产品。行情数据源自 Steam 社区公开盘口，仅供参考，不构成任何交易或投资建议，不对第三方平台饰品交易风险与价格波动承担责任。
-      </p>
-      <p style="font-size: 0.74rem; color: #526071;">
-        Valve、Steam、Counter-Strike、CS2 及其各自的徽标是 Valve Corporation 在美国和/或其他国家/地区的商标和/或注册商标。
-      </p>
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 1.5rem; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.06);">
-        <span>CtrlVersion · Steam 折扣看板</span>
-        <span style="color: var(--border-color);">|</span>
-        <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener" style="color: var(--text-muted); text-decoration: none;">蜀ICP备2026036807号-1</a>
-        <span style="color: var(--border-color);">|</span>
-        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=51160202511983" target="_blank" rel="noreferrer" style="display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-muted); text-decoration: none;">
-          <img src="./static/images/beian.png" alt="备案徽标" style="width: 14px; height: 14px; opacity: 0.85;">
-          川公网安备51160202511983号
-        </a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
+<script>
     let allCases = [];
     let currentCase = null;
     let targetRatio = 0.78; // 目标折扣
     let targetBalance = 298.0; // 目标充值金额
     let currentSuggestedPrice = 0;
     let priceChart = null;
+    let previousFocus = null;
     let currentView = 'hour'; // hour | day | month
 
     const BASE_PATH = window.location.pathname.replace(/\/+$/, '');
@@ -946,87 +141,75 @@
     }
 
     async function loadCases() {
+      const container = document.getElementById('casesGrid');
+      container.setAttribute('aria-busy', 'true');
       try {
         const res = await fetch(apiUrl('/api/cases'));
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         allCases = data.cases || [];
-        document.getElementById('totalCasesLabel').innerText = `共收录 ${data.total} 款武器箱`;
-        if (allCases.length > 0 && allCases[0].observed_at) {
-          const dt = new Date(allCases[0].observed_at);
-          document.getElementById('lastUpdateLabel').innerText = `更新于: ${dt.toLocaleString()}`;
-        }
+        document.getElementById('totalCasesLabel').innerText = `${data.total} 种武器箱`;
+        const latest = allCases.map(c => c.observed_at).filter(Boolean).sort().at(-1);
+        document.getElementById('lastUpdateLabel').innerText = latest
+          ? ` · 最近采集 ${new Date(latest).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false })} UTC+8`
+          : ' · 暂无价格快照';
+        const enabled = data.scheduler?.enabled;
+        document.getElementById('monitorStatus').dataset.state = enabled === true ? 'enabled' : 'unknown';
+        document.getElementById('monitorText').textContent = data.is_collecting
+          ? 'Steam 价格采集中' : enabled === true ? '定时监控已开启'
+          : enabled === false ? '定时监控未开启' : '监控状态未知';
         renderCases();
       } catch (err) {
         console.error('加载失败:', err);
+        container.innerHTML = '<div class="empty-state"><strong>暂时无法读取行情</strong>请检查连接后重试，现有数据不会被修改。<br><button class="btn btn-secondary" onclick="loadCases()">重新加载行情</button></div>';
+        document.getElementById('totalCasesLabel').textContent = '行情读取失败';
+        document.getElementById('lastUpdateLabel').textContent = '';
+        document.getElementById('monitorStatus').dataset.state = 'error';
+        document.getElementById('monitorText').textContent = '监控状态不可用';
+      } finally {
+        container.setAttribute('aria-busy', 'false');
       }
     }
 
     function renderCases() {
       const container = document.getElementById('casesGrid');
       const filtered = getFilteredAndSortedCases();
-      
+      document.getElementById('resultCount').textContent = `${filtered.length} / ${allCases.length} 种`;
       if (filtered.length === 0) {
-        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-dim);">没有找到匹配的武器箱</div>';
+        container.innerHTML = '<div class="empty-state"><strong>没有匹配的武器箱</strong>试试更短的中文或英文名称。</div>';
         return;
       }
-
       container.innerHTML = filtered.map(c => {
         const sellStr = c.lowest_sell_price ? `¥${c.lowest_sell_price.toFixed(2)}` : '暂无报价';
         const buyStr = c.highest_buy_price ? `¥${c.highest_buy_price.toFixed(2)}` : '暂无报价';
         const netIncome = c.est_net_income || 0;
         const netStr = netIncome ? `¥${netIncome.toFixed(2)}` : '--';
-        const sellCount = c.sell_order_count ? Number(c.sell_order_count).toLocaleString() : '--';
-        
-        // 核心：计算所需购买个数 (取整，单价超过所需价格直接显示 1)
+        const sellCount = c.sell_order_count != null ? Number(c.sell_order_count).toLocaleString('zh-CN') : '--';
         const boxCount = calculateBoxCount(netIncome);
         const totalNetEst = (boxCount * netIncome).toFixed(2);
-
-        // 建议采购价 (<= 0.78 折)
-        let targetBuyStr = '--';
-        if (netIncome) {
-          const sug = Math.floor(netIncome * targetRatio * 100) / 100;
-          targetBuyStr = `¥${sug.toFixed(2)}`;
-        }
-        
+        const targetBuyStr = netIncome ? `¥${(Math.floor(netIncome * targetRatio * 100) / 100).toFixed(2)}` : '--';
+        const name = escapeHtml(c.market_hash_name);
+        const cn = escapeHtml(c.cn_name);
         return `
-          <div class="case-card" onclick="openModal('${escapeHtml(c.market_hash_name)}')">
+          <article class="case-card" role="button" tabindex="0" data-case-name="${name}" aria-label="${cn}，打开折扣计算器">
             <div class="img-wrapper">
-              <img src="${apiUrl(c.image)}" alt="${escapeHtml(c.cn_name)}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><text y=%2250%%22 x=%2250%%22 text-anchor=%22middle%22 fill=%22gray%22>No Image</text></svg>'">
+              <span class="case-category">CS2 / 武器箱</span>
+              <img src="${apiUrl(c.image)}" alt="" width="138" height="120" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'">
+              <span class="case-open">测算<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
             </div>
-            <div class="case-title" title="${escapeHtml(c.cn_name)}">${escapeHtml(c.cn_name)}</div>
-            <div class="case-subtitle" title="${escapeHtml(c.market_hash_name)}">${escapeHtml(c.market_hash_name)}</div>
-            
-            <!-- 外部所需个数高亮展示 -->
-            <div class="count-highlight-row">
-              <span class="count-highlight-label">达成 ¥${targetBalance} 需购</span>
-              <div class="count-highlight-val">
-                <span>${boxCount}</span>
-                <small>个</small>
+            <div class="case-body">
+              <div class="case-title" title="${cn}">${cn}</div>
+              <div class="case-subtitle" title="${name}">${name}</div>
+              <div class="quote-pair">
+                <div class="quote-cell"><span class="price-label">Steam 最低售价</span><div class="price-val">${sellStr}</div></div>
+                <div class="quote-cell"><span class="price-label">最高求购</span><div class="price-val buy">${buyStr}</div></div>
               </div>
+              <div class="count-highlight-row"><span class="count-highlight-label">目标 ¥${targetBalance} 所需</span><span class="count-highlight-val">${boxCount}<small>个</small></span></div>
+              <div class="procurement-row"><span class="price-label">采购上限 / 个</span><span class="price-val">${targetBuyStr}</span></div>
+              <div class="depth-info"><span>单箱净收入 ${netStr}</span><span>预计到账 ¥${totalNetEst}</span></div>
+              <div class="depth-info"><span>期望 ${(targetRatio * 10).toFixed(1)} 折</span><span>在售挂单 ${sellCount} 个</span></div>
             </div>
-
-            <!-- 最低在售 -->
-            <div class="price-row">
-              <span class="price-label">Steam最低在售</span>
-              <span class="price-val" style="color: var(--accent-green);">${sellStr}</span>
-            </div>
-
-            <!-- 建议采购价 -->
-            <div class="price-row" style="background: rgba(250, 204, 21, 0.08); border: 1px solid rgba(250, 204, 21, 0.25);">
-              <span class="price-label" style="color: #facc15;">建议采购价 (≤${(targetRatio*10).toFixed(1)}折)</span>
-              <span class="price-val" style="color: #facc15;">${targetBuyStr}</span>
-            </div>
-
-            <div class="depth-info" style="margin-top: 0.4rem;">
-              <span>单件到手: ${netStr}</span>
-              <span>求购: ${buyStr}</span>
-            </div>
-            <div class="depth-info" style="margin-top:0.25rem;">
-              <span>总到手约: ¥${totalNetEst}</span>
-              <span>在售量: ${sellCount}</span>
-            </div>
-          </div>
-        `;
+          </article>`;
       }).join('');
     }
 
@@ -1083,13 +266,17 @@
       recalc();
       loadHistoryAndRenderChart(currentCase.market_hash_name, currentView);
 
+      previousFocus = document.activeElement;
       document.getElementById('calcModal').classList.add('active');
-      setTimeout(() => input.focus(), 100);
+      document.body.classList.add('modal-open');
+      input.focus();
     }
 
     function closeModal() {
       document.getElementById('calcModal').classList.remove('active');
+      document.body.classList.remove('modal-open');
       currentCase = null;
+      if (previousFocus?.isConnected) previousFocus.focus();
     }
 
     function closeModalOnOverlay(e) {
@@ -1110,6 +297,7 @@
 
       // 弹窗内部所需数量倒算
       const boxCount = calculateBoxCount(netIncome);
+      document.getElementById('modalTargetText').innerText = targetBalance;
       document.getElementById('modalCalcBoxCount').innerText = boxCount;
       const totalNetEst = (boxCount * netIncome).toFixed(2);
       document.getElementById('modalCalcTotalNet').innerText = `(预计到手 ¥${totalNetEst})`;
@@ -1173,6 +361,7 @@
       };
       document.getElementById('chartCompressNote').innerText = noteMap[view] || '';
 
+      document.querySelectorAll('.chart-tab-btn').forEach(btn => btn.setAttribute('aria-pressed', String(btn.classList.contains('active'))));
       if (currentCase) {
         loadHistoryAndRenderChart(currentCase.market_hash_name, view);
       }
@@ -1183,6 +372,7 @@
       try {
         const res = await fetch(apiUrl(`/api/history/${encodeURIComponent(marketHashName)}?view=${view}`));
         const d = await res.json();
+        if (!currentCase || currentCase.market_hash_name !== marketHashName || currentView !== view) return;
         const history = d.history || [];
 
         // 渲染表格
@@ -1195,7 +385,7 @@
               <tr>
                 <td>${dt}</td>
                 <td style="color:var(--accent-green);font-weight:600;">¥${(h.lowest_sell_price||0).toFixed(2)}</td>
-                <td style="color:#60a5fa;">¥${(h.highest_buy_price||0).toFixed(2)}</td>
+                <td style="color:var(--accent-blue);">¥${(h.highest_buy_price||0).toFixed(2)}</td>
                 <td>${Number(h.sell_order_count||0).toLocaleString()}</td>
                 <td>${Number(h.buy_order_count||0).toLocaleString()}</td>
               </tr>
@@ -1217,13 +407,7 @@
         priceChart.destroy();
       }
 
-      // 如果数据只有1条，为了展示漂亮的曲线，前置一条参考起点
-      let points = [...data];
-      if (points.length === 1) {
-        const p = points[0];
-        const prevTime = new Date(new Date(p.observed_at).getTime() - 3600000).toISOString();
-        points = [{ ...p, observed_at: prevTime }, p];
-      }
+      const points = [...data];
 
       const labels = points.map(p => {
         const d = new Date(p.observed_at);
@@ -1243,22 +427,22 @@
             {
               label: '最低在售',
               data: sellPrices,
-              borderColor: '#89be60',
-              backgroundColor: 'rgba(137, 190, 96, 0.12)',
+              borderColor: '#edb35b',
+              backgroundColor: 'rgba(237, 179, 91, 0.06)',
               fill: true,
-              tension: 0.35, // 平滑贝塞尔曲线
+              tension: 0.15, // 平滑贝塞尔曲线
               pointRadius: points.length > 25 ? 1 : 4,
               pointHoverRadius: 6,
-              pointBackgroundColor: '#89be60',
+              pointBackgroundColor: '#edb35b',
               borderWidth: 2
             },
             {
               label: '最高求购',
               data: buyPrices,
-              borderColor: '#60a5fa',
+              borderColor: '#97c9dd',
               backgroundColor: 'transparent',
               borderDash: [4, 4],
-              tension: 0.35,
+              tension: 0.15,
               pointRadius: points.length > 25 ? 1 : 3,
               borderWidth: 1.5
             }
@@ -1273,12 +457,12 @@
           },
           plugins: {
             legend: {
-              labels: { color: '#95a2b3', font: { size: 11 } }
+              labels: { color: '#b8bcb5', font: { size: 11 } }
             },
             tooltip: {
               backgroundColor: 'rgba(20, 24, 30, 0.95)',
               titleColor: '#f0f3f6',
-              bodyColor: '#95a2b3',
+              bodyColor: '#b8bcb5',
               borderColor: '#2e3642',
               borderWidth: 1,
               callbacks: {
@@ -1289,12 +473,12 @@
           scales: {
             x: {
               grid: { color: 'rgba(255, 255, 255, 0.05)' },
-              ticks: { color: '#64748b', maxTicksLimit: 8 }
+              ticks: { color: '#9da69f', maxTicksLimit: 8 }
             },
             y: {
               grid: { color: 'rgba(255, 255, 255, 0.05)' },
               ticks: {
-                color: '#64748b',
+                color: '#9da69f',
                 callback: (v) => '¥' + v
               }
             }
@@ -1317,7 +501,7 @@
       } catch (e) {
         alert('触发失败: ' + e);
         btn.disabled = false;
-        icon.innerHTML = '🔄';
+        icon.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>';
       }
     }
 
@@ -1331,7 +515,7 @@
             const btn = document.getElementById('refreshBtn');
             const icon = document.getElementById('refreshIcon');
             btn.disabled = false;
-            icon.innerHTML = '🔄';
+            icon.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>';
             loadCases();
           }
         } catch (e) {
@@ -1345,8 +529,29 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
+    document.getElementById('casesGrid').addEventListener('click', (e) => {
+      const card = e.target.closest('.case-card');
+      if (card) openModal(card.dataset.caseName);
+    });
+    document.getElementById('casesGrid').addEventListener('keydown', (e) => {
+      const card = e.target.closest('.case-card');
+      if (card && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        openModal(card.dataset.caseName);
+      }
+    });
     window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('calcModal');
+      if (!modal.classList.contains('active')) return;
       if (e.key === 'Escape') closeModal();
+      if (e.key !== 'Tab') return;
+      const fields = [...modal.querySelectorAll('button:not([disabled]), input:not([disabled]), select, summary, a[href], [tabindex="0"]')];
+      const first = fields[0], last = fields.at(-1);
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
     });
 
     loadCases();

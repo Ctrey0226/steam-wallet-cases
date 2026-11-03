@@ -8,3 +8,11 @@ __pycache__/
 # 动态生成的数据与数据库运行时
 data/history.db
 data/.collector.lock
+
+# Private identities, login states and sessions must never be published.
+data/accounts.db
+data/accounts.db-*
+.env
+.env.*
+.venv/
+node_modules/

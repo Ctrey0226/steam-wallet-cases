@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Query
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from steam_accounts import create_account_router
 
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 DATA_DIR = BASE_DIR / "data"
@@ -138,6 +139,7 @@ app = FastAPI(title="Steam 武器箱折扣计算与行情看板", version="1.2.0
 
 # 挂载静态资源
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+app.include_router(create_account_router(DATA_DIR / "accounts.db"))
 
 def calculate_discount(cents: int, buy_price: Decimal, coefficient: Decimal = Decimal("0.86")) -> dict:
     if cents <= 0:
@@ -300,6 +302,19 @@ def index_page():
         return HTMLResponse("<h1>Web 前端尚未构建</h1>", status_code=404)
     with open(html_file, "r", encoding="utf-8") as f:
         return HTMLResponse(f.read())
+
+@app.get("/account", response_class=HTMLResponse)
+@app.get("/inventory", response_class=HTMLResponse)
+def personal_account_page():
+    """Public shell only; personal data is served exclusively by authenticated APIs."""
+    html = (BASE_DIR / "web" / "account.html").read_text(encoding="utf-8")
+    return HTMLResponse(html, headers={
+        "Cache-Control": "private, no-store",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin",
+        "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https://community.fastly.steamstatic.com https://community.akamai.steamstatic.com https://steamcommunity-a.akamaihd.net; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self' https://steamcommunity.com",
+    })
+
 
 if __name__ == "__main__":
     import uvicorn
